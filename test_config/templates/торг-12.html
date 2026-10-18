@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Товарная накладная (ТОРГ-12) - Шаблон</title>
+    <style>
+      body {
+        font-family: "Times New Roman", Times, serif;
+        font-size: 12px;
+        line-height: 1.3;
+        margin: 20px auto;
+        max-width: 900px;
+        color: #000;
+        background: #fff;
+      }
+
+      /* Стили для пустых полей (линий) */
+      .line {
+        border-bottom: 1px solid #000;
+        display: inline-block;
+        min-height: 16px;
+        vertical-align: bottom;
+      }
+      .line-full {
+        border-bottom: 1px solid #000;
+        display: block;
+        width: 100%;
+        min-height: 16px;
+      }
+
+      /* Невидимые таблицы для выравнивания */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 5px;
+      }
+      td {
+        padding: 2px;
+        vertical-align: bottom;
+      }
+
+      /* Таблица с товарами */
+      .items-table {
+        border: 1px solid #000;
+        margin-top: 15px;
+      }
+      .items-table th,
+      .items-table td {
+        border: 1px solid #000;
+        padding: 4px;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .items-table th {
+        font-weight: normal;
+        font-size: 11px;
+      }
+      .items-table .left-text {
+        text-align: left;
+      }
+
+      /* Мелкий текст (подписи под линиями) */
+      .small-text {
+        font-size: 10px;
+        text-align: center;
+        display: block;
+        line-height: 1;
+        margin-top: 1px;
+        font-family: Arial, sans-serif;
+      }
+
+      .no-wrap {
+        white-space: nowrap;
+      }
+      .center {
+        text-align: center;
+      }
+      .right {
+        text-align: right;
+      }
+      .bold {
+        font-weight: bold;
+      }
+      .header-table td {
+        padding-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Шапка документа -->
+    <table class="header-table">
+      <tr>
+        <td style="width: 50%; vertical-align: top">
+          <div
+            class="small-text left"
+            style="text-align: left; margin-bottom: 2px"
+          >
+            (организация-грузоотправитель, адрес, телефон, факс, банковские
+            реквизиты)
+          </div>
+          <div class="line-full" style="height: 20px; margin-bottom: 5px"></div>
+          <div class="line-full" style="height: 20px; margin-bottom: 5px"></div>
+        </td>
+        <td style="width: 50%; vertical-align: top; padding-left: 20px">
+          <div
+            class="small-text left"
+            style="text-align: left; margin-bottom: 2px"
+          >
+            (структурное подразделение)
+          </div>
+          <div class="line-full" style="height: 20px; margin-bottom: 5px"></div>
+          <div class="line-full" style="height: 20px; margin-bottom: 5px"></div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Заголовок и номер -->
+    <table style="margin-bottom: 15px">
+      <tr>
+        <td style="width: 60%; font-size: 14px" class="bold">
+          ТОВАРНАЯ НАКЛАДНАЯ №
+          <span class="line" style="width: 150px">{{ doc_number }}</span>
+        </td>
+        <td class="right">
+          от <span class="line" style="width: 100px">{{ doc_date }}</span>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Продавец и Покупатель -->
+    <table style="margin-bottom: 10px">
+      <tr>
+        <td class="no-wrap" style="width: 140px; font-weight: bold">
+          Продавец:
+        </td>
+        <td><span class="line-full">{{ seller_info }}</span></td>
+      </tr>
+      <tr>
+        <td class="no-wrap" style="font-weight: bold">Покупатель:</td>
+        <td><span class="line-full">{{ buyer_info }}</span></td>
+      </tr>
+    </table>
+
+    <!-- Грузоотправитель и Грузополучатель -->
+    <table style="margin-bottom: 15px">
+      <tr>
+        <td class="no-wrap" style="width: 140px">Грузоотправитель:</td>
+        <td><span class="line-full">{{ shipper_info }}</span></td>
+      </tr>
+      <tr>
+        <td class="no-wrap">Грузополучатель:</td>
+        <td><span class="line-full">{{ consignee_info }}</span></td>
+      </tr>
+    </table>
+
+    <!-- Таблица товаров (ТОРГ-12) -->
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th rowspan="2" style="width: 30px">№<br />п/п</th>
+          <th rowspan="2" style="width: 150px">
+            Наименование товара<br />(описание)
+          </th>
+          <th rowspan="2" style="width: 60px">Код<br />товара</th>
+          <th rowspan="2" style="width: 50px">Ед.<br />изм.</th>
+          <th colspan="2">Количество</th>
+          <th rowspan="2" style="width: 70px">Цена,<br />руб. коп.</th>
+          <th rowspan="2" style="width: 80px">Сумма<br />без налога</th>
+          <th colspan="2">Налог</th>
+          <th rowspan="2" style="width: 80px">Всего<br />с налогом</th>
+        </tr>
+        <tr>
+          <th style="width: 50px">в<br />упаковках</th>
+          <th style="width: 50px">шт.</th>
+          <th style="width: 40px">%</th>
+          <th style="width: 60px">руб. коп.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Пример строки, которая будет генерироваться циклом в ПО -->
+        <tr>
+          <td>{{ item.row_num }}</td>
+          <td class="left-text">{{ item.name }}</td>
+          <td>{{ item.code }}</td>
+          <td>{{ item.unit }}</td>
+          <td>{{ item.qty_pack }}</td>
+          <td>{{ item.qty }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.sum_no_tax }}</td>
+          <td>{{ item.tax_rate }}</td>
+          <td>{{ item.tax_sum }}</td>
+          <td>{{ item.total_sum }}</td>
+        </tr>
+        <!-- Пустые строки для заполнения (если нужно визуально добить бланк) -->
+        <tr>
+          <td>&nbsp;</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <!-- Итого -->
+        <tr>
+          <td colspan="7" class="right bold">Всего:</td>
+          <td><span class="line-full">{{ total_no_tax }}</span></td>
+          <td></td>
+          <td><span class="line-full">{{ total_tax }}</span></td>
+          <td><span class="line-full">{{ total_sum }}</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+
+    <!-- Всего наименований -->
+    <table style="margin-bottom: 15px">
+      <tr>
+        <td style="width: 50%">
+          Всего наименований <span class="bold">{{ total_items_count }}</span>,
+          на сумму <span class="bold">{{ total_sum }}</span> руб.
+        </td>
+        <td class="right">
+          <div class="bold">{{ total_sum_words }}</div>
+          <div class="small-text right" style="padding-right: 40px">
+            (сумма прописью)
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Условия -->
+    <table style="margin-bottom: 10px">
+      <tr>
+        <td colspan="2">
+          <div class="line-full" style="height: 20px"></div>
+          <div class="small-text left" style="text-align: left">
+            (условия поставки, сроки, доп. сведения)
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <br />
+
+    <!-- Отгрузка и приемка -->
+    <table style="margin-bottom: 15px">
+      <tr>
+        <td style="width: 50%">
+          <div class="bold" style="margin-bottom: 10px">
+            Отгрузил (передал):
+          </div>
+          <table>
+            <tr>
+              <td style="width: 60%; border-bottom: 1px solid #000">
+                {{ sender_position }}
+              </td>
+              <td style="width: 40%; border-bottom: 1px solid #000">
+                {{ sender_signature }}
+              </td>
+            </tr>
+            <tr>
+              <td class="small-text">(должность, подпись)</td>
+              <td class="small-text">(расшифровка подписи)</td>
+            </tr>
+          </table>
+          <br />
+          М.П.
+        </td>
+        <td style="width: 50%; padding-left: 20px">
+          <div class="bold" style="margin-bottom: 10px">Принял (получил):</div>
+          <table>
+            <tr>
+              <td style="width: 60%; border-bottom: 1px solid #000">
+                {{ receiver_position }}
+              </td>
+              <td style="width: 40%; border-bottom: 1px solid #000">
+                {{ receiver_signature }}
+              </td>
+            </tr>
+            <tr>
+              <td class="small-text">(должность, подпись)</td>
+              <td class="small-text">(расшифровка подписи)</td>
+            </tr>
+          </table>
+          <br />
+          М.П.
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

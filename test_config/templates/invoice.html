@@ -1,0 +1,42 @@
+<div class="max-w-4xl mx-auto p-8 font-sans bg-white text-black">
+  <div class="flex justify-between items-start mb-12">
+    <div>
+      <h1 class="text-3xl font-bold mb-2">
+        Счет на оплату № {{header.number}}
+      </h1>
+      <p class="text-gray-600">от {{formatDate header.date}}</p>
+    </div>
+    <div class="text-right">
+      <h2 class="text-xl font-bold">ООО "Тестовая Компания"</h2>
+      <p class="text-sm text-gray-600">ИНН: 7700000000</p>
+      <p class="text-sm text-gray-600">г. Москва, ул. Тестовая, д. 1</p>
+    </div>
+  </div>
+
+  <table class="w-full mb-8 border-collapse">
+    <thead>
+      <tr class="border-b-2 border-black">
+        <th class="py-2 text-left w-12">№</th>
+        <th class="py-2 text-left">Наименование</th>
+        <th class="py-2 text-right w-24">Кол-во</th>
+        <th class="py-2 text-right w-24">Цена</th>
+        <th class="py-2 text-right w-32">Сумма</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each table_parts.rows}}
+      <tr class="border-b border-gray-200">
+        <td class="py-2">{{this.line_number}}</td>
+        <td class="py-2">{{this.product}}</td>
+        <td class="py-2 text-right">{{this.quantity}}</td>
+        <td class="py-2 text-right">{{this.price}} ₽</td>
+        <td class="py-2 text-right">{{this.amount}} ₽</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+  <div class="flex justify-end text-xl font-bold">
+    Итого к оплате: {{calculateTotal table_parts.rows}} ₽
+  </div>
+</div>

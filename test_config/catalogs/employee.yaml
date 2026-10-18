@@ -1,0 +1,21 @@
+type_name: Catalog.Employee
+kind: catalog
+label: Сотрудники
+table_name: catalog_employees
+
+fields:
+  - name: position
+    field_type: string
+    label: Должность
+    max_length: 100
+
+  - name: salary
+    field_type: decimal
+    label: Оклад
+    precision: 15
+    scale: 2
+    default_value: 0
+
+  - name: hire_date
+    field_type: date
+    label: Дата приема

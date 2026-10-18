@@ -1,0 +1,19 @@
+type_name: Document.Hiring
+kind: document
+label: Приказ о приеме
+table_name: documents_hirings
+
+fields:
+  - name: employee
+    field_type: ref
+    label: Сотрудник
+    referenced_type_name: Catalog.Employee
+
+  - name: order_number
+    field_type: string
+    label: Номер приказа
+    max_length: 50
+
+  - name: order_date
+    field_type: date
+    label: Дата приказа

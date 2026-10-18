@@ -1,0 +1,74 @@
+type_name: Document.Order
+kind: document
+label: Заказ покупателя
+table_name: documents_orders
+
+fields:
+  - name: counterparty
+    field_type: ref
+    label: Контрагент
+    referenced_type_name: Catalog.Counterparty
+
+  - name: warehouse
+    field_type: ref
+    label: Склад
+    referenced_type_name: Catalog.Warehouse
+
+  - name: status
+    field_type: string
+    label: Статус
+    max_length: 20
+    default_value: "draft"
+
+  - name: comment
+    field_type: text
+    label: Комментарий
+
+table_parts:
+  - name: rows
+    label: Строки заказа
+    fields:
+      - name: product
+        field_type: ref
+        label: Номенклатура
+        referenced_type_name: Catalog.Product
+        required: true
+
+      - name: quantity
+        field_type: decimal
+        label: Количество
+        precision: 15
+        scale: 3
+        default_value: 0
+
+      - name: price
+        field_type: decimal
+        label: Цена
+        precision: 15
+        scale: 2
+        default_value: 0
+
+      - name: amount
+        field_type: decimal
+        label: Сумма
+        precision: 15
+        scale: 2
+        default_value: 0
+
+movements:
+  - register_type_name: Register.Stock
+    dimensions:
+      product: rows.product
+      warehouse: header.warehouse
+    resources:
+      quantity: rows.quantity
+      amount: rows.amount
+    sign: -1
+
+indexes:
+  - columns: [counterparty, date]
+    type: btree
+
+print_templates:
+  - name: "Счет на оплату"
+    file_name: "торг-12.html"

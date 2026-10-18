@@ -1,0 +1,19 @@
+type_name: Catalog.Warehouse
+kind: catalog
+label: Склады
+table_name: catalog_warehouses
+
+fields:
+  - name: address
+    field_type: string
+    label: Адрес
+    max_length: 255
+
+  - name: responsible_person
+    field_type: string
+    label: Ответственное лицо
+    max_length: 100
+
+indexes:
+  - columns: [name]
+    type: btree
