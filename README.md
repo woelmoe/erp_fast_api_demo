@@ -13,6 +13,7 @@
 ![Холодный импорт](docs/import_from_zero_demo.gif)
 ![Горячий импорт и печать](docs/import_and_print_demo.gif)
 ![Демо консоли](docs/request_sql_demo.gif)
+![swagger](docs/swagger_demo.jpg)
 
 ### Демонстрация кода и репозитория:
 
